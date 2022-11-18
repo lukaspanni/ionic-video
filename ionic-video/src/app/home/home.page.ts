@@ -17,6 +17,8 @@ export class HomePage {
   public videoCapturing = false;
   public videoFile?: string = undefined;
 
+  private jsCameraPreview: any;
+
   constructor(private camera: CameraPreview, private file: File) {}
 
   startCamera() {
@@ -38,6 +40,15 @@ export class HomePage {
       (res) => {
         console.log(res);
         this.contentClass = 'hide';
+        try {
+          this.jsCameraPreview = (window as any).CameraPreview as any;
+          this.jsCameraPreview.getSupportedWhiteBalanceModes(
+            (modes) => console.log(`Supported white balance modes: ${modes}`),
+            (e) => console.log(e)
+          );
+        } catch (e) {
+          console.log(e);
+        }
       },
       (err) => {
         console.log(err);
@@ -61,6 +72,7 @@ export class HomePage {
 
   public async captureVideo() {
     console.log('captureVideo');
+    this.jsCameraPreview?.setWhiteBalanceMode('fluorescent');
     await this.camera
       .startRecordVideo({
         width: window.screen.width / 2,
