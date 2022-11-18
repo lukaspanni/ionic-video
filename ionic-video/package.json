@@ -9,7 +9,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "android-live": "ionic cordova run android --livereload --consolelogs",
+    "android": "ionic cordova run android"
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,10 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@awesome-cordova-plugins/camera-preview": "^6.2.0",
+    "@awesome-cordova-plugins/file": "^6.2.0",
     "@ionic/angular": "^6.1.9",
+    "@ionic/cordova-builders": "^7.0.0",
+    "cordova-android": "10.1.2",
     "ionicons": "^6.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
@@ -43,6 +48,12 @@
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
     "cordova-plugin-camera-preview": "^0.12.3",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-file": "^7.0.0",
+    "cordova-plugin-ionic-keyboard": "^2.0.5",
+    "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
@@ -62,7 +73,18 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-camera-preview": {}
-    }
+      "cordova-plugin-camera-preview": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      }
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }
