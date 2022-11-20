@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>media-capture</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="captureImage()">Capture Image</ion-button>
+  <ion-button (click)="captureVideo()">Capture Video</ion-button>
+  <video controls width="250" [hidden]="videoUrl == undefined">
+    <source [src]="videoUrl" type="video/mp4" />
+  </video>
+</ion-content>

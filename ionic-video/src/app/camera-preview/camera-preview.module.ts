@@ -2,18 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
+import { CameraPreviewPage } from './camera-preview.page';
 
-import { HomePageRoutingModule } from './home-routing.module';
-
+import { CameraPreviewPageRoutingModule } from './camera-preview-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    CameraPreviewPageRoutingModule,
   ],
-  declarations: [HomePage]
+  declarations: [CameraPreviewPage],
 })
-export class HomePageModule {}
+export class CameraPreviewPageModule {}

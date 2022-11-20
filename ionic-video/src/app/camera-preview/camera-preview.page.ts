@@ -8,11 +8,11 @@ import {
 import { File } from '@awesome-cordova-plugins/file/ngx';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-camera-preview',
+  templateUrl: 'camera-preview.page.html',
+  styleUrls: ['camera-preview.page.scss'],
 })
-export class HomePage {
+export class CameraPreviewPage {
   public contentClass = '';
   public videoCapturing = false;
   public videoFile?: string = undefined;

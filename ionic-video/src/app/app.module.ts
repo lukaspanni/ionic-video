@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CameraPreview } from '@awesome-cordova-plugins/camera-preview/ngx';
 import { File } from '@awesome-cordova-plugins/file/ngx';
+import { MediaCapture } from '@awesome-cordova-plugins/media-capture/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CameraPreview,
+    MediaCapture,
     File,
   ],
   bootstrap: [AppComponent],
