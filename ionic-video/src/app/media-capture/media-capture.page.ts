@@ -26,12 +26,12 @@ export class MediaCapturePage implements OnInit {
     );
   }
 
-  public captureVideo() {
+  public async captureVideo() {
     let options: CaptureImageOptions = { limit: 3 };
-    this.mediaCapture.captureVideo(options).then(
+    await this.mediaCapture.captureVideo(options).then(
       (data: MediaFile[]) => {
         console.log(data);
-        this.videoUrl = data[0].fullPath;
+        this.videoUrl = (data[0] as any).localURL;
       },
       (err: CaptureError) => console.error(err)
     );

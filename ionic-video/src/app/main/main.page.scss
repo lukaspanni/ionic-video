@@ -1,0 +1,10 @@
+#button-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  ion-button {
+    margin-bottom: 1em;
+  }
+}

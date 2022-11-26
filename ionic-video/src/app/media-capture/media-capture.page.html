@@ -5,9 +5,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="captureImage()">Capture Image</ion-button>
-  <ion-button (click)="captureVideo()">Capture Video</ion-button>
-  <video controls width="250" [hidden]="videoUrl == undefined">
-    <source [src]="videoUrl" type="video/mp4" />
-  </video>
+  <div id="button-container">
+    <ion-button (click)="captureVideo()">Capture Video</ion-button>
+    <video controls width="250" [hidden]="videoUrl == undefined">
+      <source [src]="videoUrl" type="video/mp4" />
+    </video>
+  </div>
 </ion-content>
