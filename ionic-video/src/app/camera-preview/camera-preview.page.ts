@@ -6,6 +6,7 @@ import {
   CameraPreviewDimensions,
 } from '@awesome-cordova-plugins/camera-preview/ngx';
 import { File } from '@awesome-cordova-plugins/file/ngx';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-camera-preview',
@@ -19,7 +20,7 @@ export class CameraPreviewPage {
 
   private jsCameraPreview: any;
 
-  constructor(private camera: CameraPreview, private file: File) {}
+  constructor(private camera: CameraPreview, private storage: StorageService) {}
 
   startCamera() {
     // camera options (Size and location). In the following example, the preview uses the rear camera and display the preview in the back of the webview
@@ -89,17 +90,13 @@ export class CameraPreviewPage {
   public async stopCaptureVideo() {
     const video: string = await this.camera.stopRecordVideo();
     this.videoCapturing = false;
-    const parts = video.split('/');
-    const filename = parts[parts.length - 1];
-    const targetPath = this.file.externalRootDirectory + 'Documents/test/';
-
-    console.log(
-      `move ${this.file.cacheDirectory}${filename} to ${targetPath}${filename}`
-    );
-    await this.file
-      .moveFile(this.file.cacheDirectory, filename, targetPath, filename)
-      .then(() => console.log('Copied'))
-      .catch((err) => console.log(err));
-    this.videoFile = targetPath + filename;
+    const filename = video.split('/').pop();
+    const targetPath = this.storage.buildUserAccessiblePath(filename);
+    try {
+      await this.storage.moveFile('file://' + video, targetPath);
+    } catch (e) {
+      console.warn(e);
+    }
+    this.videoFile = targetPath;
   }
 }

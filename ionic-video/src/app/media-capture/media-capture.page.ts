@@ -5,18 +5,20 @@ import {
   CaptureError,
   CaptureImageOptions,
 } from '@awesome-cordova-plugins/media-capture/ngx';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-media-capture',
   templateUrl: './media-capture.page.html',
   styleUrls: ['./media-capture.page.scss'],
 })
-export class MediaCapturePage implements OnInit {
+export class MediaCapturePage {
   public videoUrl?: string;
 
-  constructor(private mediaCapture: MediaCapture) {}
-
-  ngOnInit() {}
+  constructor(
+    private mediaCapture: MediaCapture,
+    private storage: StorageService
+  ) {}
 
   public captureImage() {
     let options: CaptureImageOptions = { limit: 1 };
@@ -31,9 +33,17 @@ export class MediaCapturePage implements OnInit {
     await this.mediaCapture.captureVideo(options).then(
       (data: MediaFile[]) => {
         console.log(data);
-        this.videoUrl = (data[0] as any).localURL;
+        this.storeVideo(data[0])
+          .then((path) => (this.videoUrl = path))
+          .catch((e) => console.warn(e));
       },
       (err: CaptureError) => console.error(err)
     );
+  }
+
+  public async storeVideo(file: MediaFile): Promise<string> {
+    const targetPath = this.storage.buildUserAccessiblePath(file.name);
+    await this.storage.moveFile(file.fullPath, targetPath);
+    return targetPath;
   }
 }
