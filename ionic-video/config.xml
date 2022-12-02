@@ -101,4 +101,13 @@
     <config-file overwrite="true" parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
         <string>Allow the app to use your camera</string>
     </config-file>
+    <config-file overwrite="true" parent="NSMicrophoneUsageDescription" platform="ios" target="*-Info.plist">
+        <string>Allow the app to use your microphone</string>
+    </config-file>
+    <config-file overwrite="true" parent="UIFileSharingEnabled" platform="ios" target="*-Info.plist">
+        <true />
+    </config-file>
+    <config-file overwrite="true" parent="LSSupportsOpeningDocumentsInPlace" platform="ios" target="*-Info.plist">
+        <true />
+    </config-file>
 </widget>
