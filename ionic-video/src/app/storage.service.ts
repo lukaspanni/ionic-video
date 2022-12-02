@@ -6,7 +6,17 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
   providedIn: 'root',
 })
 export class StorageService {
-  constructor(private file: File, private platform: Platform) {}
+  constructor(private file: File, private platform: Platform) {
+    this.platform.ready().then(async () => {
+      console.log(
+        'File move from',
+        this.file.tempDirectory,
+        'to',
+        this.file.documentsDirectory,
+        ' works'
+      );
+    });
+  }
 
   public async moveFile(
     sourcePath: string,
@@ -18,21 +28,35 @@ export class StorageService {
     const [destinationFolder, destinationFilename] =
       this.extractFolderAndName(destinationPath);
 
-    const exists = await this.file.checkDir(sourceFolder, '').then(
+    if (this.platform.is('ios')) {
+      return this.file
+        .moveFile(
+          this.file.tempDirectory,
+          sourceFilename,
+          this.file.documentsDirectory,
+          destinationFilename
+        )
+        .catch((err) => console.warn('Error while moving file', err));
+    }
+    //other implementation would not work on ios
+
+    const exists = await this.file.checkDir(destinationFolder, '').then(
       (exists) => exists,
       () => false
     );
     if (!exists)
       await this.file
-        .createDir(sourceFolder, '', false)
+        .createDir(destinationFolder, '', false)
         .catch((err) => console.warn('Directory creation failed', err));
 
-    return this.file.moveFile(
-      sourceFolder,
-      sourceFilename,
-      destinationFolder,
-      destinationFilename
-    );
+    return this.file
+      .moveFile(
+        sourceFolder,
+        sourceFilename,
+        destinationFolder,
+        destinationFilename
+      )
+      .catch((err) => console.warn('File move failed', err));
   }
 
   public buildUserAccessiblePath(filename: string): string {
@@ -40,7 +64,7 @@ export class StorageService {
       return (
         this.file.externalRootDirectory + 'Documents/crossVideo/' + filename
       );
-    return this.file.documentsDirectory + 'crossVideo/' + filename;
+    return this.file.documentsDirectory + filename;
   }
 
   private extractFolderAndName(path: string): [string, string] {
